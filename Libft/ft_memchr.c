@@ -6,7 +6,7 @@
 /*   By: tkartasl <tkartasl@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 10:58:14 by tkartasl          #+#    #+#             */
-/*   Updated: 2023/11/01 11:25:35 by tkartasl         ###   ########.fr       */
+/*   Updated: 2023/11/06 09:50:37 by tkartasl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -20,19 +20,15 @@ void	*ft_memchr(const void *s, int c, size_t	n)
 	uc = (unsigned char)c;
 	cp = (unsigned char *)s;
 	i = 0;
-	while (cp[i] != 0 && i < n)
+	while (n > 0 && i < n - 1)
 	{
 		if (cp[i] == uc)
-		{
-			cp = &cp[i];
-			return (cp);
-		}
+			return (&cp[i]);
 		i++;
 	}
-	if (cp[i] == uc)
-	{
-		cp = &cp[i];
-		return (cp);
-	}
+	if (cp[i] == uc && i > 0)
+		return (&cp[i]);
+	if (cp[i] == uc && n == 1)
+		return (&cp[i]);
 	return (NULL);
 }

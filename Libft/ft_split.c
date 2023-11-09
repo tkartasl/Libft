@@ -6,7 +6,7 @@
 /*   By: tkartasl <tkartasl@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 12:41:48 by tkartasl          #+#    #+#             */
-/*   Updated: 2023/11/01 10:16:57 by tkartasl         ###   ########.fr       */
+/*   Updated: 2023/11/09 11:05:22 by tkartasl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -40,16 +40,15 @@ static size_t	ft_strcount(const char *s, char c)
 
 static void	ft_free(char **arr)
 {
-	int	i;
 	int	n;
 
-	i = 0;
 	n = 0;
 	while (arr[n] != 0)
 	{
 		free(arr[n]);
 		n++;
 	}
+	free(arr);
 }
 
 static char	**ft_putarr(char const *s, char **arr, char c, size_t n)
@@ -70,7 +69,10 @@ static char	**ft_putarr(char const *s, char **arr, char c, size_t n)
 		{
 			arr[n] = ft_substr(s, t, k - t);
 			if (arr[n] == 0)
+			{
 				ft_free(arr);
+				return (0);
+			}
 			n++;
 		}
 	}
@@ -84,9 +86,9 @@ char	**ft_split(char const *s, char c)
 	size_t			n;
 	size_t			i;
 
-	n = 0;
-	if (*s == 0)
+	if (!s)
 		return (0);
+	n = 0;
 	i = ft_strcount(s, c);
 	arr = malloc((i + 1) * sizeof(char *));
 	if (arr == NULL)

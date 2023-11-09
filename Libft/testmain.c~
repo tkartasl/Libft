@@ -6,7 +6,7 @@
 /*   By: tkartasl <tkartasl@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 11:58:51 by tkartasl          #+#    #+#             */
-/*   Updated: 2023/11/02 14:28:53 by tkartasl         ###   ########.fr       */
+/*   Updated: 2023/11/09 18:23:29 by tkartasl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -113,13 +113,18 @@ void test_memcpy(void *dst, const void *src, size_t n)
 	printf("\n");
 }
 
-void test_memmove(void *dst1, const void *src, size_t len)
+void test_memmove(void *dst1, const void *src1, const void *src2, size_t len)
 {
-
-	printf("ft_memmove with inputs %s, %s, %zu: \n", dst1, src, len);
-    printf("%s\n", ft_memmove(dst1, src, len));
-	printf("memmove with inputs %s, %s, %zu: \n", dst1, src, len);
-    printf("%s\n", memmove(dst1, src, len));
+	char dst2[10]= "424242";
+	char *s;
+	char *s1;
+	
+	s = (char *)src1;
+	s1 = (char *)src2;
+	printf("ft_memmove with inputs %s, %s, %zu: \n", dst2, s, len);
+    printf("%s\n", ft_memmove(dst2, s, len));
+	printf("memmove with inputs %s, %s, %zu: \n", dst1, s1, len);
+    printf("%s\n", memmove(dst1, s1, len));
 	printf("\n");
 }
 
@@ -208,8 +213,8 @@ void test_memcmp(const void *s1, const void *s2, size_t n)
 void test_strnstr(const char *haystack, const char *needle, size_t len)
 {
 	printf("strnstr with inputs: %s, %s, %zu = %s\n", haystack, needle, len, strnstr(haystack, needle, len));
-    printf("ft_strnstr with inputs: %s, %s, %zu = %s\n", haystack, needle, len,ft_strnstr(haystack, needle, len));	
-	printf("\n");
+	 printf("ft_strnstr with inputs: %s, %s, %zu = %s\n", haystack, needle, len,ft_strnstr(haystack, needle, len));	
+	   printf("\n");
 }
 
 void test_atoi(const char *str)
@@ -270,7 +275,7 @@ void test_split(char const *s, char c)
     array = ft_split(s, c);
 	printf("ft_split with inputs: %s and %c\n", s, c);
     if (array == 0)
-        printf("NULL returned\n");
+        printf("%p\n", array);
     else
         while (array[i] != 0)
         {
@@ -288,7 +293,7 @@ void test_itoa(int n)
 
 char ft_testmapi(unsigned int n, char c)
 {
-    if (n % 2 == 0)
+    if (n % 2 != 0)
         c = 'I';
     return (c);
 }
@@ -320,11 +325,11 @@ void test_striteri(char *s)
 	printf("\n");
 }
 
-		void test_putchar_fd(char c)
+void test_putchar_fd(char c)
 {	
 	int fd = 1;
 	printf("ft_putchar_fd with inputs: %c , %d: \n",c ,fd); 
-	ft_putchar_fd('T', 1);
+	ft_putchar_fd(c, 1);
 	printf("\n");
 	printf("\n");
 }
@@ -349,14 +354,298 @@ void test_putendl_fd(char *s)
 
 void test_putnbr_fd(int n)
 {
-	printf("ft_putnbr_fd wit input: %d\n", n);
+	printf("ft_putnbr_fd with input: %d\n", n);
 	ft_putnbr_fd(n, 1);
     write(1, "\n", 1);
 }
 
+void test_lstnew(char *s)
+{
+	t_list	*t;
+
+	t = ft_lstnew(s);
+	printf("ft_lstnew result: %s\n%p\n", t->content, t->next);
+	printf("\n");
+}
+
+void test_lstadd_front(char *s, char *s1)
+{
+	t_list	*head;
+	t_list	*new;
+
+	head = ft_lstnew(s);
+	new = ft_lstnew(s1);
+	ft_lstadd_front(&head, new);
+	while (new != 0)
+	{
+		printf("ft_lstadd_front result: %s\n", new->content);
+		new = new->next;
+	}
+	printf("\n");
+}
+
+void test_lstsize(void)
+{
+    t_list  *head;
+    t_list  *one;
+    t_list  *two;
+    t_list  *three;
+    t_list  *four;
+
+    head = ft_lstnew(":)");
+    one = ft_lstnew(":)");
+    two = ft_lstnew(":)");
+    three = ft_lstnew(":)");
+	four = ft_lstnew(":)");
+    head->next = one;
+    one->next = two;
+    two->next = three;
+    three->next = four;
+    four->next = NULL;
+    printf("ft_lstsize result: %d", ft_lstsize(head));
+	printf("\n");
+}
+
+void test_lstlast(char *s)
+{
+    t_list  *head;
+    t_list  *one;
+    t_list  *two;
+    t_list  *three;
+    t_list  *four;
+    t_list  *result = NULL;
+
+    head = ft_lstnew("1");
+    one = ft_lstnew("2");
+    two = ft_lstnew("3");
+    three = ft_lstnew("4");
+    four = ft_lstnew(s);
+
+    head->next = one;
+    one->next = two;
+    two->next = three;
+    three->next = four;
+    four->next = NULL;
+
+    result = ft_lstlast(head);
+    printf("ft_lstlast result: %s", result->content);
+	printf("\n");
+}
+
+void test_lstadd_back(char *s)
+{
+    t_list	*head;
+    t_list	*one;
+    t_list  *two;
+    t_list  *three;
+    t_list  *four;
+    t_list  *current = NULL;
+
+    head = ft_lstnew(":(");
+    one = ft_lstnew(":(");
+    two = ft_lstnew(":(");
+    three = ft_lstnew(":(");
+    four = ft_lstnew(s);
+
+    head->next = one;
+    one->next = two;
+    two->next = three;
+    three->next = NULL;
+
+    ft_lstadd_back(&head, four);
+    current = head;
+    while (current->next != 0)
+        current = current->next;
+    printf("ft_lstadd_back result: %s", current->content);
+	printf("\n");
+}
+
+void    del(void *p)
+{
+    free(p);
+}
+
+void test_lstdelone(char *s, char *s1, char *s2)
+{
+    t_list  *one = NULL;
+    t_list  *two = NULL;
+    t_list *extra = NULL;
+    void    (*f)(void *p);
+
+    f = &del;
+    one = malloc(sizeof(t_list));
+    two = malloc(sizeof(t_list));
+    extra = malloc(sizeof(t_list));
+    extra->content = ft_strdup(s);
+    one->content = ft_strdup(s1);
+    two->content = ft_strdup(s2);
+    one->next = two;
+    two->next = extra;
+    extra->next = NULL;
+    //printf("%p %s\n", head->next, head->content);
+    ft_lstdelone(two, del);
+    //printf("%p\n%p\n%s", res, head->next, head->content);
+	printf("ft_lstdelone result:\n");
+    while (one != 0)
+    {
+        printf("%s\n", one->content);
+        one = one->next;
+    }
+	printf("\n");
+}
+
+void ft_del(void *p)
+{
+    free(p);
+}
+
+void test_lstclear()
+{
+    t_list  *head;
+    t_list  *one = NULL;
+    t_list  *two = NULL;
+    t_list *extra = NULL;
+    void    (*f)(void *p);
+
+    f = &ft_del;
+    head = malloc(sizeof(t_list));
+    one = malloc(sizeof(t_list));
+    two = malloc(sizeof(t_list));
+    extra = malloc(sizeof(t_list));
+    extra->content = ft_strdup("hei");
+    one->content = ft_strdup("moi");
+    two->content = ft_strdup("jeee");
+    head->content = ft_strdup(":)");
+    head->next = one;
+    one->next = two;
+    two->next = extra;
+    extra->next = NULL;
+    ft_lstclear(&head, f);
+    printf("ft_lstclear result: %p\n", head);
+    while (head != 0)
+    {
+        printf("%s\n", head->content);
+        head = head->next;
+    }
+	printf("\n");
+}
+
+void   ft_test1(void *p)
+{
+    (*(int *)p) = (*(int *)p) + 1;
+}
+
+void test_lstiter(int i, int j, int k, int h)
+{
+    void (*f)(void *);
+    t_list  *head;
+    t_list  *one = NULL;
+    t_list  *two = NULL;
+    t_list *extra = NULL;
+    int *p = &i;
+    int *o = &j;
+    int *m = &k;
+    int *c = &h;
+
+    f = &ft_test1;
+    head = malloc(sizeof(t_list));
+    one = malloc(sizeof(t_list));
+    two = malloc(sizeof(t_list));
+    extra = malloc(sizeof(t_list));
+    extra->content = c;
+    one->content = o;
+    two->content = m;
+    head->content = p;
+    head->next = one;
+    one->next = two;
+    two->next = extra;
+    extra->next = NULL;
+
+    ft_lstiter(head, f);
+	printf("ft_lstiter result:\n");
+    while (head != 0)
+    {
+        printf("%d\n", *(int *)head->content);
+        head = head->next;
+    }
+	printf("\n");
+}
+
+void *ft_addone(void *p)
+{
+	char *s;
+
+	p = s;
+	p = "a";
+	return (p);
+}
+
+void ft_dell(void *p)
+{
+    p = NULL;
+}
+
+void test_lstmap(char *s)
+{
+    void *(*f)(void *);
+    void (*del)(void *);
+    t_list  *head;
+    t_list  *one;
+    t_list  *two;
+    t_list  *three;
+    t_list  *four;
+    t_list  *result;
+
+    head = ft_lstnew(s);
+    one = ft_lstnew(s);
+    two = ft_lstnew(s);
+    three = ft_lstnew(s);
+    four = ft_lstnew(s);
+
+    head->next = one;
+    one->next = two;
+    two->next = three;
+    three->next = four;
+    four->next = NULL;
+
+    f = &ft_addone;
+    del = &ft_dell;
+    result = ft_lstmap(head, f, del);
+	printf("ft_lstmap result:\n");
+    while (result != 0)
+    {
+        printf("%s\n", result->content);
+        result = result->next;
+    }
+	printf("\n");
+}
+
 int main()
 {
-	char dst[10];
+	//takes (char *s)
+	test_lstnew("moi");
+
+	//takes (char *s, char *s1)
+	test_lstadd_front("42", "Hello");
+
+	test_lstsize();
+
+	//takes (char *s)
+	test_lstlast(":)");
+
+	//takes (char *s)
+	test_lstadd_back(":)");
+
+	//takes (char *s, char *s1, char *s2)
+	test_lstdelone("Hello", "!!!", "42"); 
+	
+	test_lstclear();
+
+	//takes (int a, int b, int c, int d)
+	test_lstiter(1, 2, 3 , 4);
+	
+	//takes (char *s)
+	test_lstmap("B");
 
 	//takes (int c)
 	test_isalpha(97);
@@ -387,15 +676,17 @@ int main()
 	test_bzero(s1, b1, 5);
 
 	//takes (void *dst, const void *src, size_t n)
-	test_memcpy(dst, "", 0);
+	test_memcpy(0, 0, 3);
 
 	//takes (void *dst, const void *src, size_t len)
-	char dst1[15];
-	test_memmove(dst1, "Hello 42", 4);
+	char dst1[10]= "424242";
+	char src1[] = "Hello 42";
+	char src2[] = "Hello 42";
+	test_memmove(dst1, src1, src2, 4);
 	
 	//takes (char *dst, const char *src, size_t dstsize)
 	char dst2[15];
-	test_strlcpy(dst2, "Hello 42", 6);
+	test_strlcpy(dst2, "Hello 42", 4);
 
 	//takes (char *dst, const char *src, size_t dstsize)
 	char dst3[15]= "Hello";
@@ -424,7 +715,7 @@ int main()
 	test_memcmp("Hello 42", "Hello 42", 8);
 
 	//takes (const char *haystack, const char *needle, size_t len)
-	test_strnstr("find a needle", "edle", 13);
+	test_strnstr(((void *)0), "fake", 0);
 
 	//takes (const char *str)
 	test_atoi("-2147483648");
@@ -436,16 +727,16 @@ int main()
 	test_strdup("Hello 42");
 
 	//takes (char const *s, unsigned int start, size_t len)
-	test_substr("hello 42 hello", 6, 2);
+	test_substr("hello helloo", 6, 10);
 
 	//takes (char const *s1, char const *s2)
 	test_strjoin("Hello", "42");
 
 	//takes (char const *s1, char const *set)
-	test_strtrim("..!please..!..trim..!.. me..!", "!.");
+	test_strtrim(".....", ".");
 
 	//takes (char const *s, char c)
-	test_split("cDoesccccthis creally workc", 'c');
+	test_split("Hello!", ' ');
 
 	//takes (int n)
 	test_itoa(42);

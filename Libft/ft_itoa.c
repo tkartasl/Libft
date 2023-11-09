@@ -6,7 +6,7 @@
 /*   By: tkartasl <tkartasl@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:58:28 by tkartasl          #+#    #+#             */
-/*   Updated: 2023/11/02 15:05:07 by tkartasl         ###   ########.fr       */
+/*   Updated: 2023/11/06 11:57:23 by tkartasl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -17,7 +17,7 @@ static size_t	ft_getlen(long int n)
 
 	t = 0;
 	if (n == 0)
-		return (1);;
+		return (1);
 	if (n < 0)
 	{
 		t++;
@@ -31,7 +31,7 @@ static size_t	ft_getlen(long int n)
 	return (t);
 }
 
-char	*ft_putnbr_mod(char *str, long int l, size_t len)
+static char	*ft_putnbr_mod(char *str, long int l, size_t len)
 {
 	if (l == 0)
 	{

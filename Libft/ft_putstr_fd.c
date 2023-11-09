@@ -6,13 +6,15 @@
 /*   By: tkartasl <tkartasl@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 08:42:08 by tkartasl          #+#    #+#             */
-/*   Updated: 2023/11/01 11:11:29 by tkartasl         ###   ########.fr       */
+/*   Updated: 2023/11/06 17:12:45 by tkartasl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h" 
 
 void	ft_putstr_fd(char *s, int fd)
 {
+	if (!s || !fd)
+		return ;
 	while (*s != 0)
 	{
 		write(fd, s, 1);

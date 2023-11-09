@@ -1,0 +1,61 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tkartasl <tkartasl@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/08 10:38:43 by tkartasl          #+#    #+#             */
+/*   Updated: 2023/11/09 14:58:15 by tkartasl         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include "libft.h"
+#include <stdio.h>
+
+void	ft_test(void *p)
+{
+	*(char *)p = "a";
+}
+
+void	ft_lstiter(t_list *lst, void (*f)(void *))
+{
+	t_list	*current;
+
+	current = lst;
+	while (current != 0)
+	{
+		f(current->content);
+		current = current->next;
+	}
+}
+
+int main()
+{
+	void (*f)(void *);
+	t_list  *head;
+    t_list  *one = NULL;
+    t_list  *two = NULL;
+    t_list *extra = NULL;
+
+    f = &ft_test;
+	head = malloc(sizeof(t_list));
+    one = malloc(sizeof(t_list));
+    two = malloc(sizeof(t_list));
+    extra = malloc(sizeof(t_list));
+    extra->content = "3";
+    one->content = "1";
+    two->content =  "2";
+    head->content = "0";
+    head->next = one;
+	one->next = two;
+    two->next = extra;
+    extra->next = NULL;
+
+	ft_lstiter(head, f);
+	while (head != 0)
+	{
+		printf("%s\n", head->content);
+		head = head->next;
+	}
+	return (0);	
+}
