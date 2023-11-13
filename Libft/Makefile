@@ -7,7 +7,7 @@
 #    By: tkartasl <tkartasl@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/01 13:14:17 by tkartasl          #+#    #+#              #
-#    Updated: 2023/11/09 18:02:37 by tkartasl         ###   ########.fr        #
+#    Updated: 2023/11/10 14:48:55 by tkartasl         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 NAME = libft.a
@@ -76,7 +76,7 @@ ${OBJS}: ${SRCS}
 bonus: .bonus
 
 .bonus: ${B_OBJS}
-	ar -rc ${NAME} ${B_OBJS}
+	ar -r ${NAME} ${B_OBJS}
 	touch .bonus
 
 ${B_OBJS}: ${B_SRCS}
@@ -85,6 +85,7 @@ ${B_OBJS}: ${B_SRCS}
 clean:
 	rm -f ${OBJS} ${B_OBJS}
 	rm -f .bonus
+
 fclean: clean
 	rm -f ${NAME}
 
